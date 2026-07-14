@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://192.168.0.116:3000'
+  apiUrl: 'https://sudoku-solver-api-g23t.onrender.com'
 };
