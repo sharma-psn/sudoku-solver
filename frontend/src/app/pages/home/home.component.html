@@ -1,0 +1,39 @@
+<div class="page">
+
+  <div class="header">
+    <h1>🧩 Sudoku Solver</h1>
+    <p>Solve Sudoku puzzles instantly</p>
+  </div>
+
+  <div class="card">
+
+    <app-sudoku-grid></app-sudoku-grid>
+
+    <div class="buttons">
+
+    <button
+        class="solve-btn"
+        (click)="solvePuzzle()"
+        [disabled]="loading">
+
+        {{ loading ? 'Solving...' : 'Solve Puzzle' }}
+
+    </button>
+
+    <button
+        class="reset-btn"
+        (click)="resetPuzzle()">
+
+        Reset
+
+    </button>
+
+    </div>
+
+    <div class="status">
+      Ready to solve
+    </div>
+
+  </div>
+
+</div>

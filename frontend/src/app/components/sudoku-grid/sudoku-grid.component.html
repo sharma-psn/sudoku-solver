@@ -1,0 +1,25 @@
+<div class="board">
+
+    @for (row of rows; track row) {
+
+        <div class="row">
+
+            @for (col of cols; track col) {
+
+                <input
+                    #cell
+                    type="text"
+                    maxlength="1"
+                    [ngModel]="grid[row][col]"
+                    (input)="onInput($event, row, col)"
+                    (keydown)="onKeyDown($event, row, col)"
+                    [class.right-border]="col===2 || col===5"
+                    [class.bottom-border]="row===2 || row===5">
+
+            }
+
+        </div>
+
+    }
+
+</div>
