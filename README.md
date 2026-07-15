@@ -10,7 +10,7 @@ The solver is designed to work with any valid Sudoku dimensions by dynamically g
 
 **Frontend (Vercel)**
 
-https://sudoku-solver-88oo1jdsu-sharma-dev16.vercel.app/
+https://sudoku-solver-sharma-dev16.vercel.app/
 
 **Backend**
 
