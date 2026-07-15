@@ -1,104 +1,98 @@
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
 body{
-    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    margin:0;
 }
 
-.page{
+.home-container{
 
     min-height:100vh;
 
-    background:linear-gradient(135deg,#eff6ff,#dbeafe);
-
     display:flex;
-
-    flex-direction:column;
 
     justify-content:center;
 
     align-items:center;
 
-    padding:40px;
+    background:#f4f7fc;
+
+    padding:20px;
 
 }
 
-.header{
+.hero-card{
+
+    background:white;
+
+    width:480px;
+
+    padding:40px;
+
+    border-radius:18px;
 
     text-align:center;
 
-    margin-bottom:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
 
 }
 
-.header h1{
+.logo{
 
-    font-size:42px;
+    width:90px;
 
-    color:#1e3a8a;
+    margin-bottom:15px;
+
+}
+
+h1{
+
+    font-size:38px;
+
+    color:#2563eb;
 
     margin-bottom:10px;
 
 }
 
-.header p{
+.subtitle{
 
     color:#64748b;
 
-    font-size:18px;
+    margin-bottom:30px;
 
 }
 
-.card{
+.features{
 
-    background:white;
+    text-align:left;
 
-    padding:35px;
+    margin-bottom:35px;
 
-    border-radius:20px;
+    line-height:2;
 
-    width:fit-content;
-
-    box-shadow:0 20px 45px rgba(0,0,0,.15);
-
-}
-
-.buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:20px;
-
-    margin-top:30px;
+    color:#334155;
 
 }
 
 button{
 
-    min-width:170px;
+    width:100%;
 
-    padding:14px 28px;
+    padding:16px;
+
+    margin-bottom:18px;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    font-size:16px;
-
-    font-weight:600;
+    font-size:18px;
 
     cursor:pointer;
 
     transition:.3s;
-
-}
-
-.solve-btn{
 
     background:#2563eb;
 
@@ -106,36 +100,18 @@ button{
 
 }
 
-.solve-btn:hover{
-
-    background:#1d4ed8;
+button:hover{
 
     transform:translateY(-2px);
 
 }
 
-.reset-btn{
+.secondary{
 
-    background:#f1f5f9;
+    background:white;
 
-}
+    color:#2563eb;
 
-.reset-btn:hover{
-
-    background:#e2e8f0;
-
-}
-
-.status{
-
-    margin-top:20px;
-
-    text-align:center;
-
-    font-size:16px;
-
-    color:#16a34a;
-
-    font-weight:600;
+    border:2px solid #2563eb;
 
 }

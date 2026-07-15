@@ -1,0 +1,105 @@
+<div class="page">
+
+  <div class="top-bar">
+    <button class="back-btn" routerLink="/">
+      ← Back
+    </button>
+  </div>
+
+  <div class="header">
+    <h1>🧩 Configure Sudoku</h1>
+    <p>Select your puzzle settings</p>
+  </div>
+
+  <div class="card">
+
+    <h2>Choose Sudoku Type</h2>
+
+    <div class="type-container">
+
+      <div
+        class="type-card"
+        [class.selected]="selectedType === 'classic'"
+        (click)="selectType('classic')">
+
+        <h3>Classic Sudoku</h3>
+
+        <p>Square Boxes</p>
+
+        <span>4×4 • 9×9 • 16×16 • 25×25 • 36×36</span>
+
+      </div>
+
+      <div
+        class="type-card"
+        [class.selected]="selectedType === 'rectangular'"
+        (click)="selectType('rectangular')">
+
+        <h3>Rectangular Sudoku</h3>
+
+        <p>Rectangular Boxes</p>
+
+        <span>6×6 • 8×8 • 12×12 • 15×15 • 20×20</span>
+
+      </div>
+
+    </div>
+
+    <h2>Choose Grid Size</h2>
+
+    <div class="size-container">
+
+      <button
+        *ngFor="let size of gridSizes"
+        [class.selected-size]="selectedSize === size"
+        (click)="selectedSize = size">
+
+        {{ size }}
+
+      </button>
+
+    </div>
+
+    <!-- <h2>Input Method</h2>
+
+    <div class="method-container">
+
+      <div
+        class="method-card"
+        [class.selected]="inputMethod === 'manual'"
+        (click)="inputMethod='manual'">
+
+        ✍
+        <p>Manual Entry</p>
+
+      </div>
+
+      <div
+        class="method-card"
+        [class.selected]="inputMethod === 'upload'"
+        (click)="inputMethod='upload'">
+
+        🖼
+        <p>Upload Image</p>
+
+      </div>
+
+      <div
+        class="method-card"
+        [class.selected]="inputMethod === 'camera'"
+        (click)="inputMethod='camera'">
+
+        📷
+        <p>Camera</p>
+
+      </div>
+
+    </div> -->
+
+    <button class="continue-btn" (click)="continue()">
+      Continue →
+    </button>
+
+  </div>
+
+</div>

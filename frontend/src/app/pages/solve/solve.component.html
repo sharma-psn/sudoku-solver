@@ -1,0 +1,68 @@
+<div class="page">
+
+    <div class="top-bar">
+        <button class="back-btn" (click)="navigateToSelection()">
+            ← Back
+        </button>
+    </div>
+    <div class="header">
+        <h1>🧩 Sudoku Solver</h1>
+        <p>Solve Sudoku puzzles instantly</p>
+    </div>
+
+    <div class="card">
+
+        <div class="config-card">
+
+            <table>
+
+                <tr>
+                    <th>Game</th>
+                    <td>{{ fragments.gameType }}</td>
+
+                    <th>Sudoku Type</th>
+                    <td>{{ fragments.selectedType }}</td>
+                </tr>
+
+                <tr>
+                    <th>Grid Size</th>
+                    <td>{{ config.gridSize }} × {{ config.gridSize }}</td>
+
+                    <th>Box Size</th>
+                    <td>{{ config.boxRows }} × {{ config.boxCols }}</td>
+                </tr>
+
+                <!-- <tr>
+                    <th>Input</th>
+                    <td colspan="3">{{ fragments.inputMethod }}</td>
+                </tr> -->
+
+            </table>
+
+        </div>
+
+        <app-sudoku-grid [config]="config"></app-sudoku-grid>
+
+        <div class="buttons">
+
+            <button class="solve-btn" (click)="solvePuzzle()" [disabled]="loading">
+
+                {{ loading ? 'Solving...' : 'Solve Puzzle' }}
+
+            </button>
+
+            <button class="reset-btn" (click)="resetPuzzle()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+        <div class="status">
+            Ready to solve
+        </div>
+
+    </div>
+
+</div>

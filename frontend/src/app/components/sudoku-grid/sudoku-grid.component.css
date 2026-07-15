@@ -2,28 +2,48 @@
     box-sizing: border-box;
 }
 
+.board-wrapper {
+
+    width: 100%;
+
+    overflow: auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 10px;
+
+}
+
 .board {
+
     display: inline-block;
+
     border: 4px solid #1e293b;
+
     border-radius: 12px;
+
     overflow: hidden;
+
     background: white;
+
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+
 }
 
 .row {
+
     display: flex;
+
 }
 
 input {
-    width: 58px;
-    height: 58px;
 
     border: 1px solid #cbd5e1;
 
     text-align: center;
 
-    font-size: 24px;
     font-weight: 700;
 
     color: #0f172a;
@@ -32,85 +52,148 @@ input {
 
     background: white;
 
-    transition: background-color .2s,
-                border-color .2s,
-                box-shadow .2s;
+    transition:
+        background-color .2s,
+        border-color .2s,
+        box-shadow .2s,
+        transform .15s;
 
-    box-sizing: border-box;
 }
 
 /* Hover */
 
 input:hover {
+
     background: #eff6ff;
+
 }
 
 /* Focus */
 
 input:focus {
+
     background: #dbeafe;
-    border: 1px solid #2563eb;
+
+    border-color: #2563eb;
+
     box-shadow: inset 0 0 0 1px #2563eb;
+
+    z-index: 2;
+
 }
 
-/* Remove arrows in number input */
+/* Remove arrows */
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+
     appearance: none;
+
     margin: 0;
+
 }
 
-/* Thick Vertical Borders */
+input[type=number] {
+
+    appearance: textfield;
+
+}
+
+/* Thick borders */
 
 .right-border {
-    border-right: 3px solid #1e293b !important;
-}
 
-/* Thick Horizontal Borders */
+    border-right: 3px solid #1e293b !important;
+
+}
 
 .bottom-border {
+
     border-bottom: 3px solid #1e293b !important;
+
 }
 
-/* Original numbers */
+/* Original puzzle values */
 
 .original-cell {
+
     color: #111827;
+
+    font-weight: 700;
+
 }
 
-/* Generated numbers */
+/* Solver generated values */
 
 .generated-cell {
+
     color: #16a34a;
-    font-weight: bold;
+
+    font-weight: 700;
+
+}
+
+/* Disabled */
+
+input:disabled {
+
+    background: #f8fafc;
+
+    cursor: not-allowed;
+
+}
+
+/* Scrollbar */
+
+.board-wrapper::-webkit-scrollbar {
+
+    height: 10px;
+
+}
+
+.board-wrapper::-webkit-scrollbar-thumb {
+
+    background: #94a3b8;
+
+    border-radius: 20px;
+
+}
+
+.board-wrapper::-webkit-scrollbar-track {
+
+    background: transparent;
+
 }
 
 /* Responsive */
 
-@media (max-width:768px) {
+@media (max-width: 992px) {
 
-    input {
+    .board-wrapper {
 
-        width:42px;
-
-        height:42px;
-
-        font-size:18px;
+        justify-content: flex-start;
 
     }
 
 }
 
-@media (max-width:480px) {
+@media (max-width: 768px) {
 
-    input {
+    .board {
 
-        width:34px;
+        border-width: 3px;
 
-        height:34px;
+    }
 
-        font-size:16px;
+}
+
+@media (max-width: 480px) {
+
+    .board {
+
+        border-width: 2px;
+
+        border-radius: 8px;
 
     }
 

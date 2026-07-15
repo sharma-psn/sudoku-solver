@@ -1,130 +1,279 @@
 import { Injectable } from '@nestjs/common';
 
+export interface SudokuConfig {
+  gridSize: number;
+  boxRows: number;
+  boxCols: number;
+}
+
 @Injectable()
 export class SudokuService {
 
-    solveSudoku(grid: number[][]): number[][] | null {
-        if (!this.isValidGrid(grid)) {
-            return null;
-        }
-        const boardCopy = grid.map(row => [...row]);
-        return this.solveGrid(boardCopy);
+  solveSudoku(
+    grid: number[][],
+    config: SudokuConfig,
+  ): number[][] | null {
+
+    if (!this.isValidGrid(grid, config)) {
+      return null;
     }
 
-    solveGrid(grid: number[][]): number[][] | null {
-        const emptyCell = this.findEmptyCell(grid);
-        if (!emptyCell) {
-            return grid;
-        }
-        const [row, col] = emptyCell;
-        for (let num = 1; num <= 9; num++) {
-            if (this.isSafeGrid(grid, row, col, num)) {
-                grid[row][col] = num;
-                const result = this.solveGrid(grid);
-                if (result) {
-                    return result;
-                }
-                grid[row][col] = 0;
-            }
-        }
-        return null;
+    const board = grid.map(row => [...row]);
+
+    return this.solveGrid(board, config);
+  }
+
+  private solveGrid(
+    grid: number[][],
+    config: SudokuConfig,
+  ): number[][] | null {
+
+    const empty = this.findEmptyCell(grid, config);
+
+    if (!empty) {
+      return grid;
     }
 
-    isValidGrid(grid: number[][]): boolean {
-        if (!Array.isArray(grid) || grid.length !== 9) {
+    const [row, col] = empty;
+
+    for (let num = 1; num <= config.gridSize; num++) {
+
+      if (this.isSafeGrid(grid, row, col, num, config)) {
+
+        grid[row][col] = num;
+
+        const solved = this.solveGrid(grid, config);
+
+        if (solved) {
+          return solved;
+        }
+
+        grid[row][col] = 0;
+      }
+    }
+
+    return null;
+  }
+
+  private findEmptyCell(
+    grid: number[][],
+    config: SudokuConfig,
+  ): [number, number] | null {
+
+    for (let row = 0; row < config.gridSize; row++) {
+
+      for (let col = 0; col < config.gridSize; col++) {
+
+        if (grid[row][col] === 0) {
+          return [row, col];
+        }
+
+      }
+    }
+
+    return null;
+  }
+
+  private isSafeGrid(
+    grid: number[][],
+    row: number,
+    col: number,
+    num: number,
+    config: SudokuConfig,
+  ): boolean {
+
+    // Row
+
+    for (let c = 0; c < config.gridSize; c++) {
+
+      if (grid[row][c] === num) {
+        return false;
+      }
+
+    }
+
+    // Column
+
+    for (let r = 0; r < config.gridSize; r++) {
+
+      if (grid[r][col] === num) {
+        return false;
+      }
+
+    }
+
+    // Box
+
+    const startRow =
+      Math.floor(row / config.boxRows) * config.boxRows;
+
+    const startCol =
+      Math.floor(col / config.boxCols) * config.boxCols;
+
+    for (let r = startRow; r < startRow + config.boxRows; r++) {
+
+      for (let c = startCol; c < startCol + config.boxCols; c++) {
+
+        if (grid[r][c] === num) {
+          return false;
+        }
+
+      }
+
+    }
+
+    return true;
+  }
+
+  private isValidGrid(
+    grid: number[][],
+    config: SudokuConfig,
+  ): boolean {
+
+    if (!Array.isArray(grid)) {
+      return false;
+    }
+
+    if (grid.length !== config.gridSize) {
+      return false;
+    }
+
+    for (const row of grid) {
+
+      if (!Array.isArray(row) || row.length !== config.gridSize) {
+        return false;
+      }
+
+      for (const value of row) {
+
+        if (
+          typeof value !== 'number' ||
+          value < 0 ||
+          value > config.gridSize
+        ) {
+          return false;
+        }
+
+      }
+
+    }
+
+    return (
+      this.isValidRows(grid, config) &&
+      this.isValidColumns(grid, config) &&
+      this.isValidSubgrids(grid, config)
+    );
+  }
+
+  private isValidRows(
+    grid: number[][],
+    config: SudokuConfig,
+  ): boolean {
+
+    for (let row = 0; row < config.gridSize; row++) {
+
+      const seen = new Set<number>();
+
+      for (let col = 0; col < config.gridSize; col++) {
+
+        const value = grid[row][col];
+
+        if (value !== 0) {
+
+          if (seen.has(value)) {
             return false;
+          }
+
+          seen.add(value);
         }
-        for (let i = 0; i < 9; i++) {
-            if (grid[i].length !== 9) {
+
+      }
+
+    }
+
+    return true;
+  }
+
+  private isValidColumns(
+    grid: number[][],
+    config: SudokuConfig,
+  ): boolean {
+
+    for (let col = 0; col < config.gridSize; col++) {
+
+      const seen = new Set<number>();
+
+      for (let row = 0; row < config.gridSize; row++) {
+
+        const value = grid[row][col];
+
+        if (value !== 0) {
+
+          if (seen.has(value)) {
+            return false;
+          }
+
+          seen.add(value);
+        }
+
+      }
+
+    }
+
+    return true;
+  }
+
+  private isValidSubgrids(
+    grid: number[][],
+    config: SudokuConfig,
+  ): boolean {
+
+    for (
+      let boxRow = 0;
+      boxRow < config.gridSize;
+      boxRow += config.boxRows
+    ) {
+
+      for (
+        let boxCol = 0;
+        boxCol < config.gridSize;
+        boxCol += config.boxCols
+      ) {
+
+        const seen = new Set<number>();
+
+        for (
+          let row = boxRow;
+          row < boxRow + config.boxRows;
+          row++
+        ) {
+
+          for (
+            let col = boxCol;
+            col < boxCol + config.boxCols;
+            col++
+          ) {
+
+            const value = grid[row][col];
+
+            if (value !== 0) {
+
+              if (seen.has(value)) {
                 return false;
+              }
+
+              seen.add(value);
             }
-            for (let j = 0; j < 9; j++) {
-                if (typeof grid[i][j] !== 'number' || grid[i][j] < 0 || grid[i][j] > 9) {
-                    return false;
-                }
-            }
+
+          }
+
         }
-        return (this.isValidRows(grid) && this.isValidColumns(grid) && this.isValidSubgrids(grid));
+
+      }
+
     }
 
-    isValidRows(grid: number[][]): boolean {
-        for (let i = 0; i < 9; i++) {
-            const seen = new Set<number>();
-            for (let j = 0; j < 9; j++) {
-                const num = grid[i][j];
-                if (num !== 0) {
-                    if (seen.has(num)) {
-                        return false;
-                    }
-                    seen.add(num);
-                }
-            }
-        }
-        return true;
-    }
+    return true;
+  }
 
-    isValidColumns(grid: number[][]): boolean {
-        for (let j = 0; j < 9; j++) {
-            const seen = new Set<number>();
-            for (let i = 0; i < 9; i++) {
-                const num = grid[i][j];
-                if (num !== 0) {
-                    if (seen.has(num)) {
-                        return false;
-                    }
-                    seen.add(num);
-                }
-            }
-        }
-        return true;
-    }
-
-    isValidSubgrids(grid: number[][]): boolean {
-        for (let row = 0; row < 9; row += 3) {
-            for (let col = 0; col < 9; col += 3) {
-                const seen = new Set<number>();
-                for (let i = row; i < row + 3; i++) {
-                    for (let j = col; j < col + 3; j++) {
-                        const num = grid[i][j];
-                        if (num !== 0) {
-                            if (seen.has(num)) {
-                                return false;
-                            }
-                            seen.add(num);
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    isSafeGrid(grid: number[][], row: number, col: number, num: number): boolean {
-        for (let x = 0; x < 9; x++) {
-            if (grid[row][x] === num || grid[x][col] === num) {
-                return false;
-            }
-        }
-        const startRow = row - row % 3;
-        const startCol = col - col % 3;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (grid[i + startRow][j + startCol] === num) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    findEmptyCell(grid: number[][]): [number, number] | null {
-        for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-                if (grid[i][j] === 0) {
-                    return [i, j];
-                }
-            }
-        }
-        return null;
-    }
 }

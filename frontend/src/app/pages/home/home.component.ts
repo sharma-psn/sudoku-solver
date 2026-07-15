@@ -1,56 +1,25 @@
-import { Component, ViewChild } from '@angular/core';
-import { SudokuGridComponent } from '../../components/sudoku-grid/sudoku-grid.component';
-import { SudokuService } from '../../core/services/sudoku.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CryptoService } from '../../core/services/crypto.service'; 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SudokuGridComponent],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  constructor(
+    private cryptoService: CryptoService,
+    private router: Router
+  ) {}
 
-  @ViewChild(SudokuGridComponent)
-  sudokuGrid!: SudokuGridComponent;
-
-  loading = false;
-
-  constructor(private sudokuService: SudokuService) {}
+  playGame() {
+    this.router.navigate(['/play']);
+  }
 
   solvePuzzle() {
-
-    this.loading = true;
-
-    const grid = this.sudokuGrid.getGrid();
-
-    this.sudokuService.solve(grid).subscribe({
-      
-      next: (response) => {
-        console.log('Backend Response:', response);
-
-        this.loading = false;
-
-        this.sudokuGrid.setGrid(response.grid);
-
-      },
-
-      error: (err) => {
-
-        this.loading = false;
-
-        alert(err.error.message);
-
-      }
-
-    });
-
+    this.router.navigate(['/selection'], {fragment: this.cryptoService.encrypt({gameType: 'solve'})});
   }
-
-  resetPuzzle() {
-
-    this.sudokuGrid.resetGrid();
-
-  }
-
 }

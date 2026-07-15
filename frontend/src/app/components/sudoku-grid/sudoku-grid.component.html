@@ -1,25 +1,44 @@
-<div class="board">
+<div class="board-wrapper">
 
-    @for (row of rows; track row) {
+    <div class="board">
 
-        <div class="row">
+        @for (row of grid; track $index; let i = $index) {
 
-            @for (col of cols; track col) {
+            <div class="row">
 
-                <input
-                    #cell
-                    type="text"
-                    maxlength="1"
-                    [ngModel]="grid[row][col]"
-                    (input)="onInput($event, row, col)"
-                    (keydown)="onKeyDown($event, row, col)"
-                    [class.right-border]="col===2 || col===5"
-                    [class.bottom-border]="row===2 || row===5">
+                @for (value of row; track $index; let j = $index) {
 
-            }
+                    <input
+                        #cell
+                        [name]="'cell-' + i + '-' + j"
+                        type="text"
 
-        </div>
+                        [ngModel]="grid[i][j]"
+                        (ngModelChange)="onValueChange($event, i, j)"
+                        [ngModelOptions]="{ standalone: true }"
 
-    }
+                        (keydown)="onKeyDown($event, i, j)"
+
+                        [maxlength]="config.gridSize > 9 ? 2 : 1"
+
+                        [style.width.px]="cellSize"
+                        [style.height.px]="cellSize"
+                        [style.fontSize.px]="fontSize"
+
+                        [class.right-border]="isRightBorder(j)"
+                        [class.bottom-border]="isBottomBorder(i)"
+                        [class.original-cell]="originalCells[i][j]"
+                        [class.generated-cell]="generatedCells[i][j]"
+
+                        autocomplete="off"
+                        spellcheck="false">
+
+                }
+
+            </div>
+
+        }
+
+    </div>
 
 </div>

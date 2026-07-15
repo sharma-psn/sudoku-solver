@@ -7,7 +7,7 @@ export class SudokuController {
 
   @Post('solve')
   solve(@Body() body: any) {
-    const result = this.sudokuService.solveSudoku(body.grid);
+    const result = this.sudokuService.solveSudoku(body.grid, body.config);
     return {
       message: 'Received successfully',
       grid: result,
