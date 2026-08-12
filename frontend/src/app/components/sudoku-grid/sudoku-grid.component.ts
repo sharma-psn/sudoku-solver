@@ -39,11 +39,12 @@ export class SudokuGridComponent implements OnInit {
     boxRows: number;
     boxCols: number;
   };
+  @Input() extractedGrid: (number | null)[][] = [];
+  grid: (number | null)[][] = [];
 
   @ViewChildren('cell')
   cells!: QueryList<ElementRef<HTMLInputElement>>;
 
-  grid: (number | null)[][] = [];
 
   originalCells: boolean[][] = [];
 
@@ -54,19 +55,23 @@ export class SudokuGridComponent implements OnInit {
   fontSize = 22;
 
   ngOnInit(): void {
-
     this.createGrid();
-
     this.calculateCellSize();
 
   }
 
   private createGrid(): void {
 
-    this.grid = Array.from(
-      { length: this.config.gridSize },
-      () => Array(this.config.gridSize).fill(null)
-    );
+    if (this.extractedGrid && this.extractedGrid.length === this.config.gridSize) {
+      this.grid = this.extractedGrid.map(row =>
+        row.map(value => value === 0 ? null : value)
+      );
+    } else {
+      this.grid = Array.from(
+        { length: this.config.gridSize },
+        () => Array(this.config.gridSize).fill(null)
+      );
+    }
 
     this.originalCells = Array.from(
       { length: this.config.gridSize },

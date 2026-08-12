@@ -10,6 +10,23 @@ interface SudokuConfig {
   boxCols: number;
 }
 
+interface SudokuFragments {
+  gameType: string;
+  selectedType: string;
+  inputMethod: string;
+  selectedSize: string;
+
+  image?: {
+    image: string;
+    imageName: string;
+    imageType: string;
+  };
+  imageName?: string;
+  imageType?: string;
+
+  extractedGrid?: number[][];
+}
+
 @Component({
   selector: 'app-solve',
   standalone: true,
@@ -46,28 +63,16 @@ export class SolveComponent implements OnInit, OnDestroy {
 
       const gridSize = Number(data.selectedSize.split('×')[0]);
 
-      this.config.gridSize = gridSize;
+      this.config = this.sudokuService.gridConfig(gridSize);
 
-      if (Number.isInteger(Math.sqrt(gridSize))) {
-
-        this.config.boxRows = Math.sqrt(gridSize);
-        this.config.boxCols = Math.sqrt(gridSize);
-
-      } else {
-
-        for (let i = Math.floor(Math.sqrt(gridSize)); i >= 2; i--) {
-
-          if (gridSize % i === 0) {
-
-            this.config.boxRows = i;
-            this.config.boxCols = gridSize / i;
-
-            break;
-          }
-        }
-
+      if (this.fragments.extractedGrid) {
+        this.detectedBoard = this.sudokuService.cloneGrid(
+          this.fragments.extractedGrid
+        );
+        setTimeout(() => {
+          this.solvePuzzle();
+        }, 100);
       }
-
       console.log(this.config);
 
     });
@@ -80,13 +85,13 @@ export class SolveComponent implements OnInit, OnDestroy {
     boxCols: 3
   };
 
-  fragments!: { gameType: string; selectedType: string; inputMethod: string; selectedSize: string; };
+  fragments!: SudokuFragments;
 
   fragmentSubscription: any;
 
   @ViewChild(SudokuGridComponent)
   sudokuGrid!: SudokuGridComponent;
-
+  detectedBoard: number[][] = [];
   loading = false;
 
   solvePuzzle() {
@@ -95,25 +100,14 @@ export class SolveComponent implements OnInit, OnDestroy {
 
     const grid = this.sudokuGrid.getGrid();
 
-    this.sudokuService.solve(grid, this.config).subscribe({
+    this.sudokuService.solve(grid, this.config).subscribe((response) => {
 
-      next: (response) => {
-        console.log('Backend Response:', response);
-
-        this.loading = false;
-
+      this.loading = false;
+      if (response.success) {
         this.sudokuGrid.setGrid(response.grid);
-
-      },
-
-      error: (err) => {
-
-        this.loading = false;
-
-        alert(err.error.message);
-
+      } else {
+        alert(response.message);
       }
-
     });
 
   }
@@ -125,7 +119,12 @@ export class SolveComponent implements OnInit, OnDestroy {
   }
 
   navigateToSelection() {
-    this.router.navigate(['/selection'], { fragment: this.cryptoService.encrypt(this.fragments) });
+    if (this.fragments.image) {
+      this.router.navigate(['/review'], { fragment: this.cryptoService.encrypt(this.fragments) });
+    }
+    else {
+      this.router.navigate(['/selection'], { fragment: this.cryptoService.encrypt(this.fragments) });
+    }
   }
 
   ngOnDestroy(): void {

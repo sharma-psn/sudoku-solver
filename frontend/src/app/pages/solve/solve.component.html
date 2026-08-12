@@ -41,28 +41,51 @@
 
         </div>
 
-        <app-sudoku-grid [config]="config"></app-sudoku-grid>
+        <app-sudoku-grid [config]="config" [extractedGrid]="detectedBoard"></app-sudoku-grid>
 
-        <div class="buttons">
-
-            <button class="solve-btn" (click)="solvePuzzle()" [disabled]="loading">
-
-                {{ loading ? 'Solving...' : 'Solve Puzzle' }}
-
-            </button>
-
-            <button class="reset-btn" (click)="resetPuzzle()">
-
-                Reset
-
-            </button>
-
-        </div>
-
-        <div class="status">
-            Ready to solve
-        </div>
+        @if(detectedBoard && detectedBoard.length > 0) {
+          <div class="detected-grid">
+            <h2>Detected Sudoku Grid</h2>
+          </div>
+        }
+        @else {
+            <div class="buttons">
+    
+                <button class="solve-btn" (click)="solvePuzzle()" [disabled]="loading">
+    
+                    {{ loading ? 'Solving...' : 'Solve Puzzle' }}
+    
+                </button>
+    
+                <button class="reset-btn" (click)="resetPuzzle()">
+    
+                    Reset
+    
+                </button>
+    
+            </div>
+    
+            <div class="status">
+                Ready to solve
+            </div>
+        }
 
     </div>
 
 </div>
+
+@if (loading) {
+  <div class="loading-overlay">
+    <div class="loading-modal">
+      <div class="spinner"></div>
+
+      <h3>Solving Sudoku</h3>
+
+      <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+}

@@ -9,4 +9,13 @@ export class AppController {
   sudokuApp(): string {
     return this.appService.sudokuApp();
   }
+  
+  @Get('health')
+  health() {
+    return {
+      status: 'ok',
+      service: 'NestJS Backend',
+      timestamp: new Date().toISOString(),
+    };
+  }
 }

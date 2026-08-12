@@ -1,0 +1,3 @@
+"""
+Sudoku OCR API package.
+"""

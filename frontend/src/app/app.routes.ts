@@ -3,6 +3,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { PlayComponent } from './pages/play/play.component';
 import { SolveComponent } from './pages/solve/solve.component';
 import { SelectionComponent } from './pages/selection/selection.component';
+import { ReviewComponent } from './pages/review/review.component';
+import { UploadImageComponent } from './pages/upload-image/upload-image.component';
 
 export const routes: Routes = [
   {
@@ -20,5 +22,13 @@ export const routes: Routes = [
   {
     path: 'solve',
     component: SolveComponent
+  },
+  {
+    path: 'upload',
+    component: UploadImageComponent
+  },
+  {
+    path: 'review',
+    component: ReviewComponent
   }
 ];

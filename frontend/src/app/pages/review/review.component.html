@@ -1,0 +1,91 @@
+<div class="page">
+    <div class="top-bar">
+        <button
+            class="back-btn"
+            (click)="navigateToUpload()">
+            ← Back
+        </button>
+    </div>
+
+
+
+    <div class="page-header">
+        <h1>Review Sudoku</h1>
+        <p>
+            Verify the detected puzzle before continuing.
+        </p>
+    </div>
+
+    <div class="review-content">
+        <div class="image-card">
+            <h2>Uploaded Image</h2>
+            <div class="image-container">
+                <img
+                    *ngIf="imageUrl"
+                    [src]="imageUrl"
+                    alt="Uploaded Sudoku image">
+                <div
+                    *ngIf="!imageUrl"
+                    class="empty-state">
+                    <p>
+                        Image not available
+                    </p>
+                </div>
+            </div>
+            <div
+                *ngIf="imageFile"
+                class="image-info">
+                <span>
+                    {{ imageFile.name }}
+                </span>
+                <span>
+                    {{ (imageFile.size / 1024) | number:'1.0-0' }} KB
+                </span>
+            </div>
+        </div>
+
+
+
+        <div class="grid-card">
+            <h2>Detected Sudoku</h2>
+            <p class="instruction">
+                Check the numbers detected from your image.
+                You can edit any incorrect values.
+            </p>
+            <div class="grid-container">
+                <app-sudoku-grid [config]="config" [extractedGrid]="detectedBoard">
+                </app-sudoku-grid>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    (click)="navigateToUpload()">
+
+                    Upload Another
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    (click)="continueToSolve()"
+                    [disabled]="!detectedBoard.length">
+
+                    Continue to Solve
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

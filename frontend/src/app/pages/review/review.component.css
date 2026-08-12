@@ -1,0 +1,340 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #eff6ff,
+        #dbeafe
+    );
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================
+   Header
+========================= */
+
+.top-bar {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    padding: 0;
+
+    color: #2563eb;
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.back-btn:hover {
+    color: #1d4ed8;
+    transform: translateX(-3px);
+}
+
+
+.page-header {
+    text-align: center;
+
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
+
+.page-header h1 {
+    color: #1e293b;
+
+    font-size: 34px;
+    font-weight: 700;
+
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   Main Content
+========================= */
+
+.review-content {
+    width: 100%;
+    max-width: 1150px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    align-items: stretch;
+}
+
+
+/* =========================
+   Cards
+========================= */
+
+.image-card,
+.grid-card {
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+.image-card h2,
+.grid-card h2 {
+    color: #1e293b;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   Image
+========================= */
+
+.image-container {
+    width: 100%;
+    height: 500px;
+
+    margin-top: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+}
+
+
+/* =========================
+   Image Information
+========================= */
+
+.image-info {
+    margin-top: 15px;
+
+    padding: 12px 15px;
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+.image-info span:first-child {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   Empty State
+========================= */
+
+.empty-state {
+    color: #94a3b8;
+
+    text-align: center;
+}
+
+
+/* =========================
+   Grid Section
+========================= */
+
+.instruction {
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+.grid-container {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+}
+
+
+/* =========================
+   Actions
+========================= */
+
+.actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.primary-btn,
+.secondary-btn {
+    border: none;
+
+    padding: 12px 22px;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.primary-btn {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.primary-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.primary-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.secondary-btn {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.secondary-btn:hover {
+    background: #e2e8f0;
+}
+
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 900px) {
+
+    .review-content {
+        grid-template-columns: 1fr;
+
+        max-width: 650px;
+    }
+
+    .image-container {
+        height: 400px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .page {
+        padding: 30px 15px;
+    }
+
+    .top-bar {
+        position: static;
+
+        align-self: flex-start;
+
+        margin-bottom: 20px;
+    }
+
+    .page-header {
+        margin-top: 0;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .image-card,
+    .grid-card {
+        padding: 20px;
+    }
+
+    .image-container {
+        height: 320px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+}

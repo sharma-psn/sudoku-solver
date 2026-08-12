@@ -80,8 +80,14 @@ export class SelectionComponent implements OnInit, OnDestroy{
       inputMethod: this.inputMethod,
       selectedSize: this.selectedSize
     };
+
+    if (this.inputMethod === 'upload') {
+      this.router.navigate(['/upload'], { fragment: this.cryptoService.encrypt(fragmentData) });
+      return;
+    } else {
+      this.router.navigate(['/solve'], { fragment: this.cryptoService.encrypt(fragmentData) });
+    }
     
-    this.router.navigate(['/solve'], { fragment: this.cryptoService.encrypt(fragmentData) });
     
   }
   
