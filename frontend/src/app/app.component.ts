@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { HealthService } from './core/services/health.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,19 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'sudoku-frontend';
+  constructor(
+    private healthService: HealthService
+  ) { }
+  ngOnInit(): void {
+    this.healthService.healthCheck().subscribe({
+      next: (response) => {
+        console.log('Health check response:', response);
+      },
+      error: (error) => {
+        console.error('Health check error:', error);
+      }
+    });
+  }
 }

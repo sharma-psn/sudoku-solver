@@ -10,7 +10,7 @@ app = FastAPI(
 app.include_router(sudoku_router)
 
 
-@app.get("/")
+@app.get("/health")
 def health():
     return {
         "status": "running",

@@ -11,6 +11,26 @@ export class PythonService {
     private readonly configService: ConfigService,
   ) {}
 
+  async checkHealth() {
+    const pythonUrl = this.configService.get<string>('PYTHON_SERVICE_URL');
+
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`${pythonUrl}/health`),
+      );
+
+      return {
+        status: 'ok',
+        ...response.data,
+      };
+    } catch (error) {
+      return {
+        status: 'error',
+        message: 'Python service is unavailable',
+      };
+    }
+  }
+
   async extractGrid(
     file: any,
     rows: number,
