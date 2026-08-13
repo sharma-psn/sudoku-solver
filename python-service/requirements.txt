@@ -21,8 +21,8 @@ Pillow==11.3.0
 # OCR
 # ==========================
 easyocr==1.7.2
-torch
-torchvision
+torch==2.7.1
+torchvision==0.22.1
 
 # ==========================
 # Logging
