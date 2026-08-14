@@ -11,6 +11,7 @@ Pillow==11.3.0
 easyocr==1.7.2
 torch==2.7.1
 torchvision==0.22.1
+pytesseract==0.3.13
 
 loguru==0.7.3
 python-dotenv==1.1.1
