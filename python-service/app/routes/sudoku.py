@@ -20,6 +20,7 @@ async def extract_grid(
     rows: int = Form(...),
     cols: int = Form(...),
 ):
+    print("========== EXTRACT GRID CALLED ==========", flush=True)
     """
     Extract the Sudoku grid from an uploaded image.
     """
