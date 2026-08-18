@@ -1,10 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { PythonService } from './python-ocr/python.service';
 
 @Controller()
 export class AppController {
   [x: string]: any;
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly pythonService: PythonService) {}
 
   @Get()
   sudokuApp(): string {
